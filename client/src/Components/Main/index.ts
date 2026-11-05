@@ -1,0 +1,10 @@
+export {default as Header} from "./Header";
+export {default as Footer} from "./Footer";
+export {default as Hero} from "./Hero";
+export {default as Wrapper} from "./Wrapper";
+export {default as Loans} from "./Loans";
+export {default as Banner} from "./Banner";
+export {default as Projects} from "./Projects";
+export {default as Process} from "./Process";
+export {default as Testimonials} from "./Testimonials";
+export {default as MobileMenu} from "./MobileMenu";
