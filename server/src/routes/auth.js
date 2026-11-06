@@ -9,7 +9,7 @@ import { issueSession, revokeAllSessions, revokeRefreshToken, rotateSession } fr
 import { sendPasswordResetEmail } from "../services/passwordReset.js";
 import { generateAccountNumber } from "../services/accountNumber.js";
 import { sendMail } from "../services/mailer.js";
-import { welcomeEmail } from "../emails/templates.js";
+import { passwordChangedEmail, welcomeEmail } from "../emails/templates.js";
 import { sha256 } from "../utils/crypto.js";
 import { ApiError, badRequest, conflict, unauthorized } from "../utils/errors.js";
 
@@ -141,6 +141,7 @@ router.post(
     user.lockUntil = null;
     await user.save();
     await revokeAllSessions(user._id);
+    sendMail({ to: user.email, name: user.name, ...passwordChangedEmail({ name: user.name }) });
 
     const session = await issueSession(user, { userAgent: userAgent(req) });
     res.json({ user, ...session });
@@ -160,6 +161,7 @@ router.post(
     user.passwordHash = await hashPassword(req.body.newPassword);
     await user.save();
     await revokeAllSessions(user._id);
+    sendMail({ to: user.email, name: user.name, ...passwordChangedEmail({ name: user.name }) });
 
     const fresh = await User.findById(user._id).select("+tokenVersion");
     const session = await issueSession(fresh, {

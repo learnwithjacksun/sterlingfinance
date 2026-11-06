@@ -42,11 +42,11 @@ const Details = () => {
               className="w-full h-full object-cover mt-10"
             />
             <p className="mt-10">
-              The True Mark Financial Bank Auto loan offers you short to medium
-              term loans for the purchase of brand new vehicles with the
-              convenience of spreading repayments over a period of time. This is
-              available to both salaried customers and business owners. It
-              enables customer purchase vehicles from auto dealers who have been
+              The Sterling Holdings Auto loan offers you short to medium term
+              loans for the purchase of brand new vehicles with the convenience
+              of spreading repayments over a period of time. This is available
+              to both salaried customers and business owners. It enables
+              customer purchase vehicles from auto dealers who have been
               prequalified and have agreed an SLA with the bank
             </p>
 

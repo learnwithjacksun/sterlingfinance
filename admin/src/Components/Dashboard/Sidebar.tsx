@@ -78,7 +78,7 @@ const Sidebar = () => {
         <header className="h-[71px] flex items-center gap-2 px-4">
           <img src="/logo.png" alt="logo" className="w-10 h-10" />
           {/* <h4 className="text-white font-sora font-medium text-base">
-            True Mark Financial Bank
+            Sterling Holdings
           </h4> */}
         </header>
         <div className="flex flex-col gap-2 h-[calc(100dvh-71px)] p-4">
@@ -104,7 +104,7 @@ const Sidebar = () => {
                 >
                   <NavLink
                     to={item.href}
-                    className={({ isActive }) => 
+                    className={({ isActive }) =>
                       isActive
                         ? "text-white w-full bg-gradient-to-br from-gradient-1 to-gradient-2 flex items-center gap-2 p-3 rounded-md"
                         : "text-white flex items-center gap-2 p-3 rounded-lg w-full hover:bg-gradient-to-br from-gradient-1 to-gradient-2"

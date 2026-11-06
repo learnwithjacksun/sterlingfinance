@@ -45,18 +45,14 @@ const Login = () => {
       <MainLayout>
         <div className="layout my-10 bg-secondary p-6 rounded-lg border border-line">
           <div className="space-y-1 text-center border-b border-line pb-4">
-            <h1 className="text-2xl font-sora font-bold">
-              Welcome Back
-            </h1>
+            <h1 className="text-2xl font-sora font-bold">Welcome Back</h1>
             <p className="text-muted text-sm">
-              Please enter your details to login to your True Mark Financial Bank account
+              Please enter your details to login to your Sterling Holdings
+              account
             </p>
           </div>
 
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4 mt-6"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-6">
             {/* Email */}
             <div className="flex flex-col gap-1">
               <label htmlFor="email" className="text-muted text-sm">
@@ -106,7 +102,10 @@ const Login = () => {
             </div>
 
             <div>
-              <Link to="/forgot-password" className="text-sm underline font-medium">
+              <Link
+                to="/forgot-password"
+                className="text-sm underline font-medium"
+              >
                 Forgot password?
               </Link>
             </div>

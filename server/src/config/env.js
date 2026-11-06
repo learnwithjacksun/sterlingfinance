@@ -15,7 +15,7 @@ const schema = z.object({
 
   BREVO_API_KEY: z.string().optional(),
   BREVO_SENDER_EMAIL: z.string().optional(),
-  BREVO_SENDER_NAME: z.string().default("True Mark Financial Bank"),
+  BREVO_SENDER_NAME: z.string().default("Sterling Holdings"),
 
   IMGBB_API_KEY: z.string().optional(),
 

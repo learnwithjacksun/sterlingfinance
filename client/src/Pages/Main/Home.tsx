@@ -9,7 +9,7 @@ const Home = () => {
         <section id="about">
           <Wrapper
             title="Small Business Loans For a Daily Expenses"
-            description="At True Mark Financial Bank, we believe that your bank should support your dreams and aspirations. That’s why we have developed convenient mortgage solutions to help make your dream of owning your own business a reality. We offer a range of loans to suit your needs, from personal loans to business loans. We also offer a range of savings and investment products to help you grow your money. "
+            description="At Sterling Holdings, we believe that your bank should support your dreams and aspirations. That’s why we have developed convenient mortgage solutions to help make your dream of owning your own business a reality. We offer a range of loans to suit your needs, from personal loans to business loans. We also offer a range of savings and investment products to help you grow your money. "
             image="https://i.ibb.co/WYQs36Y/about.png"
           >
             <div className="flex items-center md:flex-row flex-col">

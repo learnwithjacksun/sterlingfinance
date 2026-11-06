@@ -52,9 +52,17 @@ const Auth = () => {
     <div className="center h-screen">
       <div className="max-w-md w-[90%]">
         <div className="text-center border-b border-line pb-4">
-          <img src="/logo.png" alt="Logo" width={50} height={50} className="mx-auto" />
+          <img
+            src="/logo.png"
+            alt="Logo"
+            width={50}
+            height={50}
+            className="mx-auto"
+          />
           <h2 className="text-2xl font-sora font-bold">Admin Panel</h2>
-          <p className="text-sm text-muted">Welcome to True Mark Financial Bank Admin Panel</p>
+          <p className="text-sm text-muted">
+            Welcome to Sterling Holdings Admin Panel
+          </p>
         </div>
 
         {!user ? (
@@ -87,17 +95,29 @@ const Auth = () => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Link to="/forgot-password" className="text-sm underline block mb-4">
+            <Link
+              to="/forgot-password"
+              className="text-sm underline block mb-4"
+            >
               Forgot password?
             </Link>
-            <button type="submit" disabled={isLoading} className="w-full h-10 bg-dark text-white rounded-md">
-              {isLoading ? <Loader className="w-4 h-4 animate-spin mx-auto" /> : "Continue"}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-10 bg-dark text-white rounded-md"
+            >
+              {isLoading ? (
+                <Loader className="w-4 h-4 animate-spin mx-auto" />
+              ) : (
+                "Continue"
+              )}
             </button>
           </form>
         ) : (
           <form onSubmit={handlePasscode} className="mt-10">
             <p className="text-sm text-muted mb-4">
-              Signed in as <strong>{user.email}</strong>. Enter the admin passcode to continue.
+              Signed in as <strong>{user.email}</strong>. Enter the admin
+              passcode to continue.
             </p>
             <div className="mb-4">
               <label htmlFor="passcode" className="block mb-2">
@@ -113,10 +133,22 @@ const Auth = () => {
                 onChange={(e) => setCode(e.target.value)}
               />
             </div>
-            <button type="submit" disabled={isLoading} className="w-full h-10 bg-dark text-white rounded-md">
-              {isLoading ? <Loader className="w-4 h-4 animate-spin mx-auto" /> : "Login"}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-10 bg-dark text-white rounded-md"
+            >
+              {isLoading ? (
+                <Loader className="w-4 h-4 animate-spin mx-auto" />
+              ) : (
+                "Login"
+              )}
             </button>
-            <button type="button" onClick={() => logout()} className="w-full mt-3 text-sm underline">
+            <button
+              type="button"
+              onClick={() => logout()}
+              className="w-full mt-3 text-sm underline"
+            >
               Use a different account
             </button>
           </form>

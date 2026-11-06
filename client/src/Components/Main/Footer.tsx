@@ -69,9 +69,11 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             <div className="space-y-4">
               <Link to="/" className="flex flex-col gap-2">
-                <div className="bg-white rounded-full h-12 w-12 flex items-center justify-center"><img src="/logo.png" alt="logo" width={30} height={30} /></div>
+                <div className="bg-white rounded-full h-12 w-12 flex items-center justify-center">
+                  <img src="/logo.png" alt="logo" width={30} height={30} />
+                </div>
                 <h3 className="text-xl font-sora text-white font-bold">
-                  True Mark Financial Bank
+                  Sterling Holdings
                 </h3>
               </Link>
 
@@ -108,7 +110,7 @@ const Footer = () => {
 
       <div className="bg-primary py-10">
         <p className="text-white text-sm main">
-          &copy; {new Date().getFullYear()} True Mark Financial Bank. All rights
+          &copy; {new Date().getFullYear()} Sterling Holdings. All rights
           reserved.
         </p>
       </div>

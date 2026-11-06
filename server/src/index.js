@@ -11,7 +11,7 @@ await mongoose.syncIndexes();
 
 const app = createApp();
 const server = app.listen(env.PORT, () => {
-  console.log(`API listening on :${env.PORT}`);
+  console.log(`API listening on http://localhost:${env.PORT}`);
   getBrevo()?.catch((e) => console.error("[mailer] could not load Brevo SDK:", e.message));
 });
 
