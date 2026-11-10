@@ -49,7 +49,7 @@ export const navLinks = [
 export const accountTypes = [
   {
     label: "Checking Account",
-    value: "checking ",
+    value: "checking",
   },
   {
     label: "Online Account",

@@ -1,11 +1,11 @@
 import { DashboardLayout } from "@/Layouts";
 import { registerSchema } from "@/Schemas/registerSchema";
-import { useCountries } from "@/Hooks";
+import { Country, State, City } from "country-state-city";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useAdminStore } from "@/Stores";
 import { gender, employmentStatus, currency, accountTypes } from "@/Constants/data";
 import { ChevronDown, Eye, EyeOff, Loader } from "lucide-react";
@@ -13,17 +13,29 @@ import { Container } from "@/Components/Dashboard";
 
 const CreateUser = () => {
   const { createUser, isLoading } = useAdminStore();
-  const { countries } = useCountries();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
   });
+
+  const countries = useMemo(() => Country.getAllCountries(), []);
+  const countryName = watch("country");
+  const stateName = watch("state");
+  const countryCode = countries.find((c) => c.name === countryName)?.isoCode;
+  const states = useMemo(() => (countryCode ? State.getStatesOfCountry(countryCode) : []), [countryCode]);
+  const stateCode = states.find((x) => x.name === stateName)?.isoCode;
+  const cities = useMemo(
+    () => (countryCode && stateCode ? City.getCitiesOfState(countryCode, stateCode) : []),
+    [countryCode, stateCode],
+  );
 
   const onSubmit = (data: z.infer<typeof registerSchema>) => {
     toast.promise(createUser(data), {
@@ -103,7 +115,7 @@ const CreateUser = () => {
             </label>
             <div className="relative">
               <select
-                id="accountType"
+                id="gender"
                 className="input w-full appearance-none"
                 {...register("gender")}
               >
@@ -119,9 +131,9 @@ const CreateUser = () => {
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted"
               />
             </div>
-            {errors.phone && (
+            {errors.gender && (
               <p className="text-xs text-red-500 pl-1">
-                {errors.phone.message}
+                {errors.gender.message}
               </p>
             )}
           </div>
@@ -164,9 +176,9 @@ const CreateUser = () => {
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted"
               />
             </div>
-            {errors.phone && (
+            {errors.currency && (
               <p className="text-xs text-red-500 pl-1">
-                {errors.phone.message}
+                {errors.currency.message}
               </p>
             )}
           </div>
@@ -192,9 +204,9 @@ const CreateUser = () => {
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted"
               />
             </div>
-            {errors.phone && (
+            {errors.employment_status && (
               <p className="text-xs text-red-500 pl-1">
-                {errors.phone.message}
+                {errors.employment_status.message}
               </p>
             )}
           </div>
@@ -208,12 +220,17 @@ const CreateUser = () => {
               <select
                 id="country"
                 className="input w-full appearance-none"
-                {...register("country")}
+                {...register("country", {
+                  onChange: () => {
+                    setValue("state", "");
+                    setValue("city", "");
+                  },
+                })}
               >
                 <option value="">Select your country</option>
                 {countries.map((country) => (
-                  <option key={country.name.common} value={country.name.common}>
-                    {country.name.common}
+                  <option key={country.isoCode} value={country.name}>
+                    {country.name}
                   </option>
                 ))}
               </select>
@@ -247,36 +264,62 @@ const CreateUser = () => {
             )}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="address" className="text-muted text-sm">
-              City
+            <label htmlFor="state" className="text-muted text-sm">
+              State / Province
             </label>
-            <input
-              type="text"
-              id="city"
-              placeholder="Enter your city"
-              className="input"
-              {...register("city")}
-            />
-            {errors.city && (
-              <p className="text-xs text-red-500 pl-1">{errors.city.message}</p>
+            {states.length > 0 ? (
+              <div className="relative">
+                <select
+                  id="state"
+                  className="input w-full appearance-none"
+                  {...register("state", { onChange: () => setValue("city", "") })}
+                >
+                  <option value="">Select your state</option>
+                  {states.map((x) => (
+                    <option key={x.isoCode} value={x.name}>
+                      {x.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={18} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted" />
+              </div>
+            ) : (
+              <input
+                type="text"
+                id="state"
+                placeholder={countryName ? "Enter your state" : "Select a country first"}
+                className="input"
+                {...register("state")}
+              />
             )}
+            {errors.state && <p className="text-xs text-red-500 pl-1">{errors.state.message}</p>}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="address" className="text-muted text-sm">
-              State
+            <label htmlFor="city" className="text-muted text-sm">
+              City
             </label>
-            <input
-              type="text"
-              id="state"
-              placeholder="Enter your state"
-              className="input"
-              {...register("state")}
-            />
-            {errors.state && (
-              <p className="text-xs text-red-500 pl-1">
-                {errors.state.message}
-              </p>
+            {cities.length > 0 ? (
+              <div className="relative">
+                <select id="city" className="input w-full appearance-none" {...register("city")}>
+                  <option value="">Select your city</option>
+                  {cities.map((x, i) => (
+                    <option key={`${x.name}-${i}`} value={x.name}>
+                      {x.name}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown size={18} className="absolute right-2 top-1/2 -translate-y-1/2 text-muted" />
+              </div>
+            ) : (
+              <input
+                type="text"
+                id="city"
+                placeholder="Enter your city"
+                className="input"
+                {...register("city")}
+              />
             )}
+            {errors.city && <p className="text-xs text-red-500 pl-1">{errors.city.message}</p>}
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="zip" className="text-muted text-sm">
